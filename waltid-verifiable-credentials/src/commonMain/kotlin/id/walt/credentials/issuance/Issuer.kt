@@ -118,6 +118,43 @@ object Issuer {
             }
         )
     }
+    @JvmBlocking
+    @JvmAsync
+    @JsPromise
+    @JsExport.Ignore
+    suspend fun W3CVC.mdocIssue(
+        issuerKey: Key,
+        issuerDid: String,
+        subjectDid: String,
+
+        mappings: JsonObject,
+
+        additionalJwtHeader: Map<String, String>,
+        additionalJwtOptions: Map<String, JsonElement>,
+
+        completeJwtWithDefaultCredentialData: Boolean = true,
+        disclosureMap: SDMap
+    ) = mergingToVc(
+        issuerDid = issuerDid,
+        subjectDid = subjectDid,
+        mappings = mappings,
+        completeJwtWithDefaultCredentialData
+    ).run {
+        println("CREATING MDOC: ")
+        println(w3cVc)
+
+        w3cVc.signMDoc(
+            issuerKey = issuerKey,
+            issuerDid = issuerDid,
+            subjectDid = subjectDid,
+            additionalJwtHeader = additionalJwtHeader.toMutableMap().apply {
+                put("typ", "JWT")
+            },
+            additionalJwtOptions = additionalJwtOptions.toMutableMap().apply {
+                putAll(jwtOptions)
+            }
+        )
+    }
 
     data class IssuanceInformation(
         val w3cVc: W3CVC,

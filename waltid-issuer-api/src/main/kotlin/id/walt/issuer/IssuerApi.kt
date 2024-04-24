@@ -338,7 +338,26 @@ fun Application.issuerApi() {
                             }
                         }
                     }) {
-                        context.respond(HttpStatusCode.OK, "mdoc issued")
+
+                        //logger.debug { "HRVOJE MDL OFFER" }
+                        val mdlIssuanceRequest = context.receive<MDLIssuanceRequest>()
+
+
+
+                        //logger.debug { mdlIssuanceRequest }
+                        //logger.debug { mdlIssuanceRequest.issuerKey }
+                        //logger.debug { mdlIssuanceRequest.issuerDid }
+                        //logger.debug { mdlIssuanceRequest.mapping }
+                        //logger.debug { mdlIssuanceRequest.vc }
+
+                        val offerUri = createCredentialOfferUri(listOf(mdlIssuanceRequest))
+
+                        //logger.debug { "HRVOJE MDL OFFER: $offerUri" }
+
+                        context.respond(
+                            HttpStatusCode.OK, offerUri
+                        )
+                        //context.respond(HttpStatusCode.OK, "mdoc issued hrvoje")
                     }
                 }
                 get("credentialOffer", {

@@ -104,9 +104,15 @@ dependencies {
 
     api(project(":waltid-verifiable-credentials"))
     api(project(":waltid-sdjwt"))
+    api(project(":waltid-mdoc-credentials"))
+
 
     // TODO: REMOVE:
     implementation("com.nimbusds:nimbus-jose-jwt:9.37.3")
+    // COSE
+    implementation("com.augustcellars.cose:cose-java:1.1.0")
+    //
+
 }
 
 tasks.withType<Test> {

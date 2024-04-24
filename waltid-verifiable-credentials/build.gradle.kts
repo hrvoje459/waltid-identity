@@ -90,16 +90,22 @@ kotlin {
                 // Loggin
                 implementation("io.github.oshai:kotlin-logging:6.0.4")
 
+                // JOSE
+                implementation("com.nimbusds:nimbus-jose-jwt:9.37.3")
+
                 // walt.id
                 api(project(":waltid-crypto"))
                 api(project(":waltid-sdjwt"))
                 api(project(":waltid-did"))
+                api(project(":waltid-mdoc-credentials"))
             }
         }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.0")
+                // JOSE
+                implementation("com.nimbusds:nimbus-jose-jwt:9.37.3")
             }
         }
         val jvmMain by getting {
@@ -112,6 +118,11 @@ kotlin {
 
                 // Json canonicalization
                 implementation("io.github.erdtman:java-json-canonicalization:1.1")
+                // JOSE
+                implementation("com.nimbusds:nimbus-jose-jwt:9.37.3")
+                // BOUNCY CASTLE
+                implementation("org.bouncycastle:bcprov-lts8on:2.73.4")
+                implementation("org.bouncycastle:bcpkix-lts8on:2.73.4")
             }
         }
         val jvmTest by getting {

@@ -40,3 +40,12 @@ data class IssuerOnboardingRequest(
 data class IssuerOnboardingResponse(
     val issuerKey: JsonElement, val issuerDid: String
 )
+
+@Serializable
+data class MDLIssuanceRequest(
+    override val issuerKey: JsonObject,
+    override val issuerDid: String,
+
+    override val vc: W3CVC,
+    override val mapping: JsonObject? = null
+) : BaseIssuanceRequest()
