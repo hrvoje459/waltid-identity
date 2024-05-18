@@ -402,6 +402,7 @@ open class CIProvider : OpenIDCredentialIssuer(
                             .addItemToSign("org.iso.18013.5.1", "age_over_21", BooleanElement(if (age_over_21.toString() == "true") true else false))
                             .addItemToSign("org.iso.18013.5.1", "age_over_24", BooleanElement(if (age_over_24.toString() == "true") true else false))
                             .addItemToSign("org.iso.18013.5.1", "age_over_65", BooleanElement(if (age_over_65.toString() == "true") true else false))
+                            .addItemToSign("org.iso.18013.5.1", "document_number", document_number.toString().replace("\"","").toDE())
                             //.addItemToSign("org.iso.18013.5.1", "driving_privileges", driving_privileges.toString().replace("\"","").toDE())
                             .addItemToSign("org.iso.18013.5.1", "driving_privileges", driving_privileges_list_element)
                             .sign(
