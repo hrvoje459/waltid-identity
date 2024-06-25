@@ -34,16 +34,38 @@ object OidcIssuance {
             val vcContext = vc.getJsonStringArray("@context")
             val vcType = vc.getJsonStringArray("type")
 
-            builder = builder.addOfferedCredential(
-                OfferedCredential(
-                    format = CredentialFormat.jwt_vc_json,
-                    types = vc["type"]!!.jsonArray.map { it.jsonPrimitive.content },
-                    credentialDefinition = JsonLDCredentialDefinition(
-                        vcContext.map { JsonPrimitive(it) },
-                        vcType
+            var isMdoc = false
+
+            vcType.forEach {
+                if (it == "Iso18013DriversLicenseCredential"){
+                    isMdoc = true
+                }
+            }
+
+            if (isMdoc){
+                builder = builder.addOfferedCredential(
+                    OfferedCredential(
+                        format = CredentialFormat.mso_mdoc,
+                        types = vc["type"]!!.jsonArray.map { it.jsonPrimitive.content },
+                        credentialDefinition = JsonLDCredentialDefinition(
+                            vcContext.map { JsonPrimitive(it) },
+                            vcType
+                        )
                     )
                 )
-            )
+            }
+            else{
+                builder = builder.addOfferedCredential(
+                    OfferedCredential(
+                        format = CredentialFormat.jwt_vc_json,
+                        types = vc["type"]!!.jsonArray.map { it.jsonPrimitive.content },
+                        credentialDefinition = JsonLDCredentialDefinition(
+                            vcContext.map { JsonPrimitive(it) },
+                            vcType
+                        )
+                    )
+                )
+            }
         }
 
         return builder

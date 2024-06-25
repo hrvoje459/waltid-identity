@@ -112,6 +112,8 @@ dependencies {
     // COSE
     implementation("com.augustcellars.cose:cose-java:1.1.0")
     //
+    implementation("io.github.microutils:kotlin-logging-jvm:2.0.2")
+
 
 }
 
